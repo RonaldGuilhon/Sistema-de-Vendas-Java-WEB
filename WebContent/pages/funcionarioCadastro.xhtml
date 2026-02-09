@@ -46,7 +46,7 @@
         </p:password>
 
         <p:outputLabel value="Cargo:" />
-        <p:selectOneMenu value="#{MBFuncionarios.funcionario.funcao}" readonly="#{MBFuncionarios.acao == 'Excluir'}">
+        <p:selectOneMenu value="#{MBFuncionarios.funcionario.funcao}" disabled="#{MBFuncionarios.acao == 'Excluir'}">
           <f:selectItem itemValue="" itemLabel="Selecione um Cargo" />
           <f:selectItem itemValue="Administrador" itemLabel="Administrador" />
           <f:selectItem itemValue="Gerente" itemLabel="Gerente" />
@@ -57,7 +57,7 @@
       </h:panelGrid>
 
       <h:panelGrid columns="5">
-        <p:button value="Novo" actionListener="#{MBFuncionarios.novo}" update=":frmforcad:pnforcad"
+        <p:commandButton value="Novo" actionListener="#{MBFuncionarios.novo}" update=":frmfuncad:pnfuncad"
           rendered="#{MBFuncionarios.acao == 'Novo'}" />
         <p:commandButton value="Salvar" actionListener="#{MBFuncionarios.salvar}"
           update=":msgGlobal :frmfuncad:pnfuncad" />

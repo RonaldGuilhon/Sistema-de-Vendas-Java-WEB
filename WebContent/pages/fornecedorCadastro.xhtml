@@ -32,7 +32,7 @@
             </h:panelGrid>
 
             <h:panelGrid columns="5">
-                <p:button value="Novo" actionListener="#{MBFornecedores.novo}" update=":frmforcad:pnforcad"
+                <p:commandButton value="Novo" actionListener="#{MBFornecedores.novo}" update=":frmforcad:pnforcad"
                     rendered="#{MBFornecedores.acao == 'Novo'}" />
                 <p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}"
                     update=":msgGlobal :frmforcad:pnforcad" />

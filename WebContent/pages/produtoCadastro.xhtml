@@ -46,7 +46,7 @@
                 </p:inputText>
 
                 <p:outputLabel value="Fornecedor:" />
-                <p:selectOneMenu value="#{MBProdutos.produto.fornecedor}" readonly="#{MBProdutos.acao == 'Excluir'}"
+                <p:selectOneMenu value="#{MBProdutos.produto.fornecedor}" disabled="#{MBProdutos.acao == 'Excluir'}"
                     converter="fornecedoresConverter">
                     <f:selectItem itemValue="" itemLabel="Selecione um Fornecedor" />
                     <f:selectItems value="#{MBProdutos.listaFornecedor}" var="fornecedor" itemValue="#{fornecedor}"
@@ -58,7 +58,7 @@
             </h:panelGrid>
 
             <h:panelGrid columns="5">
-                <p:button value="Novo" actionListener="#{MBProdutos.novo}" update=":frmprocad:pnprocad"
+                <p:commandButton value="Novo" actionListener="#{MBProdutos.novo}" update=":frmprocad:pnprocad"
                     rendered="#{MBProdutos.acao == 'Novo'}" />
                 <p:commandButton value="Salvar" actionListener="#{MBProdutos.salvar}"
                     update=":msgGlobal :frmprocad:pnprocad" />
