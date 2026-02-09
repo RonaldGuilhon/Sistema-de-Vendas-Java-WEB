@@ -16,7 +16,7 @@ public class FornecedorDAOTest {
 		Fornecedor f1 = new Fornecedor();
 		
 		
-		f1.setDescricao("Hugo Vasconcelos");
+		f1.setDescricao("Ronald");
 		
 		
 		FornecedoresDAO dao = new FornecedoresDAO();
