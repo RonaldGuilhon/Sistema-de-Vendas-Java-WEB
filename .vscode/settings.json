@@ -1,0 +1,17 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "WebContent/WEB-INF/classes",
+    "java.project.referencedLibraries": [
+        "c:/Users/Ronald/Documents/GitHub/Sistema-de-Vendas-Java-WEB/WebContent/WEB-INF/lib/*.jar",
+        "c:/glassfish5/glassfish/lib/javaee.jar"
+    ],
+    "cSpell.words": [
+        "Vendas",
+        "primefaces",
+        "postegres",
+        "glassfish",
+        "util",
+        "jdbc",
+        "webapp"
+    ]
+}
