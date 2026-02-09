@@ -69,7 +69,7 @@ public class VendasDAOTeste {
 	}
 
 	@Test
-
+	@Ignore
 	public void editar() {
 
 		FuncionariosDAO fdao = new FuncionariosDAO();

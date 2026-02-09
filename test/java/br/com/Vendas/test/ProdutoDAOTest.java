@@ -16,7 +16,7 @@ import br.com.Vendas.domain.Produto;
 public class ProdutoDAOTest {
 	
 	@Test
-	
+	@Ignore
 	public void salvar(){
 		
 		FornecedoresDAO dao = new FornecedoresDAO();

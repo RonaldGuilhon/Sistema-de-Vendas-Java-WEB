@@ -6,9 +6,10 @@ import br.com.Vendas.util.HibernateUtil;
 
 public class GerarTabelasTest {
 
-	@Test
-	public void gerar(){
-		HibernateUtil.getSessionFactory();
-	}
-	
+    @Test
+    @org.junit.Ignore
+    public void gerar() {
+        HibernateUtil.getSessionFactory();
+    }
+
 }

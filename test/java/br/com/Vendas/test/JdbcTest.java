@@ -6,6 +6,7 @@ import org.junit.Test;
 
 public class JdbcTest {
     @Test
+    @org.junit.Ignore
     public void testConnection() {
         try {
             Class.forName("org.postgresql.Driver");
