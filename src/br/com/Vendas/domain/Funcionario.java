@@ -1,5 +1,6 @@
 package br.com.Vendas.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT f FROM Funcionario f WHERE f.codigo = :codigo")
 
 })
-public class Funcionario {
+public class Funcionario implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
