@@ -18,8 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_itens")
 @NamedQueries({
-@NamedQuery(name = "Item.listar", query = "SELECT item FROM Item item" ),
-@NamedQuery(name = "Item.buscarPorCodigo", query = "SELECT item FROM Item item WHERE item.codigo = :codigo" )
+@NamedQuery(name = "Item.listar", query = "SELECT i FROM Item i" ),
+@NamedQuery(name = "Item.buscarPorCodigo", query = "SELECT i FROM Item i WHERE i.codigo = :codigo" )
 
 })
 public class Item {

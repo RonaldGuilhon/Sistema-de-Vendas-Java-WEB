@@ -19,7 +19,7 @@
   
   <context-param>  
     <param-name>primefaces.THEME</param-name>  
-    <param-value>aristo</param-value>  
+    <param-value>sam</param-value>  
   </context-param>  
   
   <!-- Listener customizado (mantido) -->
