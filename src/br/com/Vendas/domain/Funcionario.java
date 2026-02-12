@@ -16,110 +16,109 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 @Table(name = "tb_funcionarios")
 @NamedQueries({
-@NamedQuery(name = "Funcionario.listar", query = "SELECT f FROM Funcionario f" ),
-@NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT f FROM Funcionario f WHERE f.codigo = :codigo" )
+    @NamedQuery(name = "Funcionario.listar", query = "SELECT f FROM Funcionario f")
+    ,
+@NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT f FROM Funcionario f WHERE f.codigo = :codigo")
 
 })
 public class Funcionario {
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Id
-	@Column(name = "fun_codigo")
-	private Long codigo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @Column(name = "fun_codigo")
+    private Long codigo;
 
-	@NotEmpty(message = "Insira o Nome")
-	@Column(name = "fun_nome", length = 50, nullable = false)
-	private String nome;
- 
-	
-	@CPF(message = "CPF Incorreto")
-	@Column(name = "fun_cpf", length = 14, nullable = false, unique = true)
-	private String cpf;
+    @NotEmpty(message = "Insira o Nome")
+    @Column(name = "fun_nome", length = 50, nullable = false)
+    private String nome;
 
-	@NotEmpty(message = "Insira a Senha")
-	@Size(min = 5, max = 8, message = "Sua senha deve conter de 5 a 8 caracteres")
-	@Column(name = "fun_senha", length = 50, nullable = false)
-	private String senha;
-    
-	@NotEmpty(message = "Insira um cargo")
-	@Column(name = "fun_funcao", length = 50, nullable = false)
-	private String funcao;
+    @CPF(message = "CPF Incorreto")
+    @Column(name = "fun_cpf", length = 14, nullable = false, unique = true)
+    private String cpf;
 
-	public Long getCodigo() {
-		return codigo;
-	}
+    @NotEmpty(message = "Insira a Senha")
+    @Size(min = 5, max = 8, message = "Sua senha deve conter de 5 a 8 caracteres")
+    @Column(name = "fun_senha", length = 50, nullable = false)
+    private String senha;
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
+    @NotEmpty(message = "Insira um cargo")
+    @Column(name = "fun_funcao", length = 50, nullable = false)
+    private String funcao;
 
-	public String getNome() {
-		return nome;
-	}
+    public Long getCodigo() {
+        return codigo;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
-	public String getFuncao() {
-		return funcao;
-	}
+    public String getSenha() {
+        return senha;
+    }
 
-	public void setFuncao(String funcao) {
-		this.funcao = funcao;
-	}
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
-	@Override
-	public String toString() {
-		return "Funcionario [codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", funcao="
-				+ funcao + "]";
-	}
+    public String getFuncao() {
+        return funcao;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		return result;
-	}
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
-				return false;
-		} else if (!codigo.equals(other.codigo))
-			return false;
-		return true;
-	}
-	
-	
-	
-	
-	
-	
+    @Override
+    public String toString() {
+        return "Funcionario [codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", funcao="
+                + funcao + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Funcionario other = (Funcionario) obj;
+        if (codigo == null) {
+            if (other.codigo != null) {
+                return false;
+            }
+        } else if (!codigo.equals(other.codigo)) {
+            return false;
+        }
+        return true;
+    }
 
 }

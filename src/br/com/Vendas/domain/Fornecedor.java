@@ -14,8 +14,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "tb_fornecedores")
 @NamedQueries({
-@NamedQuery(name = "Fornecedor.listar", query = "SELECT f FROM Fornecedor f" ),
-@NamedQuery(name = "Fornecedor.buscarPorCodigo", query = "SELECT f FROM Fornecedor f WHERE f.codigo = :codigo" )
+    @NamedQuery(name = "Fornecedor.listar", query = "SELECT f FROM Fornecedor f")
+    ,
+@NamedQuery(name = "Fornecedor.buscarPorCodigo", query = "SELECT f FROM Fornecedor f WHERE f.codigo = :codigo")
 
 })
 public class Fornecedor {

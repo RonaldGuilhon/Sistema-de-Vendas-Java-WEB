@@ -23,7 +23,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "tb_produtos")
 @NamedQueries({
-    @NamedQuery(name = "Produto.listar", query = "SELECT p FROM Produto p"),
+    @NamedQuery(name = "Produto.listar", query = "SELECT p FROM Produto p")
+    ,
     @NamedQuery(name = "Produto.buscarPorCodigo", query = "SELECT p FROM Produto p WHERE p.codigo = :codigo")
 
 })
