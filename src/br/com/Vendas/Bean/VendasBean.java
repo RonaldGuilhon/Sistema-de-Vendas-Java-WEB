@@ -8,12 +8,10 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.Vendas.DAO.FornecedoresDAO;
 import br.com.Vendas.DAO.FuncionariosDAO;
 import br.com.Vendas.DAO.ItemDAO;
 import br.com.Vendas.DAO.ProdutosDAO;
 import br.com.Vendas.DAO.VendasDAO;
-import br.com.Vendas.domain.Fornecedor;
 import br.com.Vendas.domain.Funcionario;
 import br.com.Vendas.domain.Item;
 import br.com.Vendas.domain.Produto;
@@ -181,15 +179,17 @@ public class VendasBean {
 			 
 			 Vendas vendaFK = vdao.buscarPorCodigo(codigoVenda);
 			 
-			 for(Item item : itens){
-				 item.setVenda(vendaFK);
-				 ItemDAO itemdao = new ItemDAO();
-				 itemdao.salvar(item);
-			 }
+                         itens.stream().map((item) -> {
+                             item.setVenda(vendaFK);
+                         return item;
+                     }).forEachOrdered((item) -> {
+                         ItemDAO itemdao = new ItemDAO();
+                         itemdao.salvar(item);
+                     });
 			 
 			 vendaCadastro = new Vendas();
 			 vendaCadastro.setValor_total(new BigDecimal("0.00"));
-			 itens = new ArrayList<Item>();
+			 itens = new ArrayList<>();
 		 
 		 JSFUtil.adicionarMensagemSucesso("Salvo com Sucesso");
 		
