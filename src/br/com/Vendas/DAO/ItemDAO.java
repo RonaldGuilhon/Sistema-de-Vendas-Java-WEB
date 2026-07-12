@@ -1,4 +1,4 @@
-package br.com.Vendas.DAO;
+package br.com.vendas.dao;
 
 import java.util.List;
 
@@ -6,135 +6,96 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.com.Vendas.domain.Item;
-import br.com.Vendas.domain.Produto;
-import br.com.Vendas.util.HibernateUtil;
+import br.com.vendas.domain.Item;
+import br.com.vendas.util.HibernateUtil;
 
 public class ItemDAO {
 
-	
-	public void salvar(Item item) {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
+    public void salvar(Item item) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
 
-		Transaction transacao = null;
+        try {
+            transacao = sessao.beginTransaction();
+            sessao.save(item);
+            transacao.commit();
+        } catch (RuntimeException ex) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            throw ex;
+        } finally {
+            sessao.close();
+        }
+    }
 
-		try {
-			transacao = sessao.beginTransaction(); // abrindo a transação
-			sessao.save(item);
-			transacao.commit(); // confirmando a transação
+    @SuppressWarnings("unchecked")
+    public List<Item> listar() {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        List<Item> itens = null;
 
-		} catch (RuntimeException ex) {
-			if (transacao != null) {
-				transacao.rollback(); // desfaz a transação
-			}
+        try {
+            Query consulta = sessao.getNamedQuery("Item.listar");
+            itens = consulta.list();
+        } catch (RuntimeException ex) {
+            throw ex;
+        } finally {
+            sessao.close();
+        }
 
-		}
+        return itens;
+    }
 
-		finally {
-			sessao.close();
-		}
+    public Item buscarPorCodigo(Long codigo) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Item item = null;
 
-	}
+        try {
+            Query consulta = sessao.getNamedQuery("Item.buscarPorCodigo");
+            consulta.setLong("codigo", codigo);
+            item = (Item) consulta.uniqueResult();
+        } catch (RuntimeException ex) {
+            throw ex;
+        } finally {
+            sessao.close();
+        }
 
-	@SuppressWarnings("unchecked")
-	public List<Item> listar() {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
+        return item;
+    }
 
-		List<Item> item = null;
+    public void excluir(Item item) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
 
-		try {
-			
-			Query consulta = sessao.getNamedQuery("Item.listar");
-			item = consulta.list();
-			
+        try {
+            transacao = sessao.beginTransaction();
+            sessao.delete(item);
+            transacao.commit();
+        } catch (RuntimeException ex) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            throw ex;
+        } finally {
+            sessao.close();
+        }
+    }
 
-		} catch (RuntimeException ex) {
-			throw ex;
-		}
+    public void editar(Item item) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
 
-		finally {
-			sessao.close();
-		}
-		
-		return item;
-	}
-	
-	
-	
-	public Item buscarPorCodigo(Long codigo) {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
-
-		Item item = null;
-
-		try {
-			
-			Query consulta = sessao.getNamedQuery("Item.buscarPorCodigo");
-			consulta.setLong("codigo", codigo);
-			item = (Item) consulta.uniqueResult();
-			
-
-		} catch (RuntimeException ex) {
-			throw ex;
-		}
-
-		finally {
-			sessao.close();
-		}
-		
-		return item;
-	}
-	
-	
-	public void excluir(Item item) {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
-
-		Transaction transacao = null;
-
-		try {
-			transacao = sessao.beginTransaction(); // abrindo a transação
-			sessao.delete(item);
-			transacao.commit(); // confirmando a transação
-
-		} catch (RuntimeException ex) {
-			if (transacao != null) {
-				transacao.rollback(); // desfaz a transação
-			}
-
-		}
-
-		finally {
-			sessao.close();
-		}
-
-	}
-	
-	
-	
-	public void editar(Item item) {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
-
-		Transaction transacao = null;
-
-		try {
-			transacao = sessao.beginTransaction(); // abrindo a transação
-			
-			sessao.update(item);
-			transacao.commit(); // confirmando a transação
-
-		} catch (RuntimeException ex) {
-			if (transacao != null) {
-				transacao.rollback(); // desfaz a transação
-			}
-
-		}
-
-		finally {
-			sessao.close();
-		}
-
-	}
-	
-	
-	
-	
+        try {
+            transacao = sessao.beginTransaction();
+            sessao.update(item);
+            transacao.commit();
+        } catch (RuntimeException ex) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            throw ex;
+        } finally {
+            sessao.close();
+        }
+    }
 }

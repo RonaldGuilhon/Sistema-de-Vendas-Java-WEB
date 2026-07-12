@@ -25,7 +25,7 @@
             <p:separator />
 
             <p:dataTable emptyMessage="Nenhum Registro Cadastrado" value="#{MBVendas.produtos}"
-                filteredValue="#{MBVendas.produtosFiltrados}" var="produto" rows="4" paginator="true">
+                filteredValue="#{MBVendas.produtosFiltrados}" var="produto" rows="4" paginator="true" id="tbProdutos">
                 <p:column headerText="Código">
                     <h:outputText value="#{produto.codigo}" />
                 </p:column>
@@ -36,7 +36,8 @@
                     <h:outputText value="#{produto.preco}" />
                 </p:column>
                 <p:column headerText="Quantidade">
-                    <h:outputText value="#{produto.quantidade}" />
+                    <h:outputText value="#{produto.quantidade}"
+                        styleClass="#{produto.quantidade le 0 ? 'ui-outputfont-red' : (produto.quantidade le 5 ? 'ui-outputfont-orange' : 'ui-outputfont-green')}" />
                 </p:column>
                 <p:column headerText="Fornecedor" filterBy="#{produto.fornecedor.descricao}">
                     <h:outputText value="#{produto.fornecedor.descricao}" />
@@ -44,9 +45,8 @@
                 <p:column headerText="Opções">
 
                     <p:commandButton icon="ui-icon-plus" actionListener="#{MBVendas.adicionar(produto)}"
-                        update=":frmvencad:tbItens :frmvencad:txtVenValorTotal">
-
-                    </p:commandButton>
+                        update=":frmvencad:tbItens :frmvencad:txtVenValorTotal :msgGlobal"
+                        disabled="#{produto.quantidade le 0}" />
 
                 </p:column>
             </p:dataTable>
@@ -63,7 +63,7 @@
                     <h:outputText value="#{item.produto.descricao}" />
                 </p:column>
                 <p:column headerText="Valor Item">
-                    <h:outputText value="#{item.valor_parcial}" />
+                    <h:outputText value="#{item.valorParcial}" />
                 </p:column>
                 <p:column headerText="Quantidade">
                     <h:outputText value="#{item.quantidade}" />
@@ -74,14 +74,14 @@
 
                 <p:column headerText="Opções">
                     <p:commandButton icon="ui-icon-close" actionListener="#{MBVendas.remover(item)}"
-                        update=":frmvencad:tbItens :frmvencad:txtVenValorTotal" />
+                        update=":frmvencad:tbItens :frmvencad:txtVenValorTotal :frmvencad:tbProdutos" />
                 </p:column>
             </p:dataTable>
 
             <p:separator />
 
             <h:panelGrid columns="2" cellpadding="8">
-                <h:outputText id="txtVenValorTotal" value="Valor Total: #{MBVendas.vendaCadastro.valor_total}" />
+                <h:outputText id="txtVenValorTotal" value="Valor Total: #{MBVendas.vendaCadastro.valorTotal}" />
 
                 <p:commandButton value="Finalizar Venda" actionListener="#{MBVendas.carregarDadosVenda}"
                     oncomplete="PF('dlgFinVenda').show()" update=":dial" />
@@ -102,10 +102,10 @@
                     <h:outputText value="Funcionário" />
                     <h:outputText value="#{MBVendas.vendaCadastro.funcionario.nome}" />
                     <h:outputText value="Valor Total" />
-                    <h:outputText value="#{MBVendas.vendaCadastro.valor_total}" />
+                    <h:outputText value="#{MBVendas.vendaCadastro.valorTotal}" />
                     <h:panelGrid columns="2">
                         <p:commandButton value="Finalizar" actionListener="#{MBVendas.salvar}"
-                            update=":msgGlobal :frmvencad:tbItens :frmvencad:txtVenValorTotal"
+                            update=":msgGlobal :frmvencad:tbItens :frmvencad:txtVenValorTotal :frmvencad:tbProdutos"
                             onclick="PF('dlgFinVenda').hide()" />
                         <p:commandButton value="Voltar" onclick="PF('dlgFinVenda').hide()" />
                     </h:panelGrid>

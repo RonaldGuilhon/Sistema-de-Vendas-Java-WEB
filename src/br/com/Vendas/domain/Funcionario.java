@@ -1,6 +1,7 @@
-package br.com.Vendas.domain;
+package br.com.vendas.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +18,12 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 @Table(name = "tb_funcionarios")
 @NamedQueries({
-    @NamedQuery(name = "Funcionario.listar", query = "SELECT f FROM Funcionario f")
-    ,
-@NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT f FROM Funcionario f WHERE f.codigo = :codigo")
-
+    @NamedQuery(name = "Funcionario.listar", query = "SELECT f FROM Funcionario f"),
+    @NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT f FROM Funcionario f WHERE f.codigo = :codigo")
 })
 public class Funcionario implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -88,8 +89,7 @@ public class Funcionario implements Serializable {
 
     @Override
     public String toString() {
-        return "Funcionario [codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", funcao="
-                + funcao + "]";
+        return "Funcionario [codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", funcao=" + funcao + "]";
     }
 
     @Override
@@ -121,5 +121,4 @@ public class Funcionario implements Serializable {
         }
         return true;
     }
-
 }

@@ -25,8 +25,8 @@
             <h:panelGrid columns="4">
                 <p:outputLabel value="Descrição:" />
                 <p:inputText maxlength="50" size="30" />
-                <p:button value="Buscar" />
-                <p:button value="Novo" outcome="/pages/funcionarioCadastro.xhtml">
+                <p:button value="Buscar" icon="ui-icon-search" />
+                <p:button value="Novo" outcome="/pages/funcionarioCadastro.xhtml" icon="ui-icon-plus">
                     <f:param name="funacao" value="Novo" />
                 </p:button>
             </h:panelGrid>
@@ -43,7 +43,9 @@
                     <h:outputText value="#{funcionario.cpf}" />
                 </p:column>
                 <p:column headerText="Cargo" filterBy="#{funcionario.funcao}">
-                    <h:outputText value="#{funcionario.funcao}" />
+                    <h:outputText value="#{funcionario.funcao}"
+                        style="padding: 2px 8px; border-radius: 3px; font-weight: bold; font-size: 12px;"
+                        styleClass="#{funcionario.funcao == 'Administrador' ? 'ui-outputfont-red' : (funcionario.funcao == 'Gerente' ? 'ui-outputfont-orange' : 'ui-outputfont-green')}" />
                 </p:column>
                 <p:column headerText="Opções">
                     <p:button icon="ui-icon-pencil" outcome="/pages/funcionarioCadastro.xhtml">

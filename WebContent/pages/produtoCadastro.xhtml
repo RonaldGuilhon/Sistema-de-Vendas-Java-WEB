@@ -22,37 +22,47 @@
                     <h:outputText value="Produtos" />
                 </f:facet>
             </p:toolbar>
-            <h:panelGrid columns="2" id="pnprocad">
+            <h:panelGrid columns="3" id="pnprocad">
                 <p:outputLabel value="Código:" />
                 <p:inputText maxlength="20" size="10" readonly="true" value="#{MBProdutos.produto.codigo}" />
+                <h:outputText />
 
-                <p:outputLabel value="Descrição:" />
+                <p:outputLabel value="Descrição: *" />
                 <p:inputText maxlength="50" size="20" value="#{MBProdutos.produto.descricao}"
-                    readonly="#{MBProdutos.acao == 'Excluir'}">
+                    readonly="#{MBProdutos.acao == 'Excluir'}" required="true"
+                    requiredMessage="Insira a Descrição do produto">
                     <f:validateBean />
                 </p:inputText>
+                <p:message for="@this" display="text" />
 
-                <p:outputLabel value="Valor:" />
+                <p:outputLabel value="Valor: *" />
                 <p:inputText maxlength="50" size="20" value="#{MBProdutos.produto.preco}"
-                    readonly="#{MBProdutos.acao == 'Excluir'}">
+                    readonly="#{MBProdutos.acao == 'Excluir'}" required="true"
+                    requiredMessage="Insira o Preço do produto">
+                    <f:validateRegex pattern="^\d+(\.\d{1,2})?$" />
                     <f:validateBean />
                 </p:inputText>
+                <p:message for="@this" display="text" />
 
-
-                <p:outputLabel value="Quantidade:" />
+                <p:outputLabel value="Quantidade: *" />
                 <p:inputText maxlength="8" size="20" value="#{MBProdutos.produto.quantidade}"
-                    readonly="#{MBProdutos.acao == 'Excluir'}">
+                    readonly="#{MBProdutos.acao == 'Excluir'}" required="true"
+                    requiredMessage="Insira a Quantidade do produto">
+                    <f:validateRegex pattern="^\d+$" />
                     <f:validateBean />
                 </p:inputText>
+                <p:message for="@this" display="text" />
 
-                <p:outputLabel value="Fornecedor:" />
+                <p:outputLabel value="Fornecedor: *" />
                 <p:selectOneMenu value="#{MBProdutos.produto.fornecedor}" disabled="#{MBProdutos.acao == 'Excluir'}"
-                    converter="fornecedoresConverter">
+                    converter="fornecedorConverter" required="true"
+                    requiredMessage="Selecione um Fornecedor">
                     <f:selectItem itemValue="" itemLabel="Selecione um Fornecedor" />
                     <f:selectItems value="#{MBProdutos.listaFornecedor}" var="fornecedor" itemValue="#{fornecedor}"
                         itemLabel="#{fornecedor.descricao}" />
                     <f:validateBean />
                 </p:selectOneMenu>
+                <p:message for="@this" display="text" />
 
 
             </h:panelGrid>
@@ -61,15 +71,25 @@
                 <p:commandButton value="Novo" actionListener="#{MBProdutos.novo}" update=":frmprocad:pnprocad"
                     rendered="#{MBProdutos.acao == 'Novo'}" />
                 <p:commandButton value="Salvar" actionListener="#{MBProdutos.salvar}"
-                    update=":msgGlobal :frmprocad:pnprocad" />
+                    update=":msgGlobal :frmprocad:pnprocad" process="@form" icon="ui-icon-disk" />
 
                 <p:commandButton value="Excluir" actionListener="#{MBProdutos.excluir}" update=":msgGlobal"
-                    rendered="#{MBProdutos.acao == 'Excluir'}" />
+                    rendered="#{MBProdutos.acao == 'Excluir'}" onclick="PF('dlgConfirmExcluir').show()" />
                 <p:commandButton value="Editar" actionListener="#{MBProdutos.editar}" update=":msgGlobal"
-                    rendered="#{MBProdutos.acao == 'Editar'}" />
-                <p:button value="Voltar" outcome="/pages/produtoPesquisa.xhtml" />
+                    rendered="#{MBProdutos.acao == 'Editar'}" process="@form" icon="ui-icon-disk" />
+                <p:button value="Voltar" outcome="/pages/produtoPesquisa.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
 
             </h:panelGrid>
+
+            <p:dialog header="Confirmar Exclusão" widgetVar="dlgConfirmExcluir" modal="true"
+                resizable="false" appendTo="@(body)">
+                <h:outputText value="Tem certeza que deseja excluir este produto?" />
+                <f:facet name="footer">
+                    <p:commandButton value="Sim" actionListener="#{MBProdutos.excluir}"
+                        update=":msgGlobal" onclick="PF('dlgConfirmExcluir').hide()" />
+                    <p:commandButton value="Não" onclick="PF('dlgConfirmExcluir').hide()" />
+                </f:facet>
+            </p:dialog>
         </h:form>
 
     </ui:define>

@@ -1,2 +1,21 @@
+# Build output
 /build/
 /target/
+
+# IDE files
+.classpath
+.project
+.settings/
+.vscode/
+nb-configuration.xml
+nbproject/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# War file
+*.war
+
+# Log files
+*.log

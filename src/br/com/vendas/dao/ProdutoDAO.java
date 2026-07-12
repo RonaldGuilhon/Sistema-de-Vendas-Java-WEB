@@ -1,4 +1,4 @@
-package br.com.Vendas.DAO;
+package br.com.vendas.dao;
 
 import java.util.List;
 
@@ -6,112 +6,96 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.com.Vendas.domain.Fornecedor;
-import br.com.Vendas.util.HibernateUtil;
+import br.com.vendas.domain.Produto;
+import br.com.vendas.util.HibernateUtil;
 
-public class FornecedoresDAO {
+public class ProdutoDAO {
 
-    public void salvar(Fornecedor fornecedor) {
+    public void salvar(Produto produto) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-
         Transaction transacao = null;
 
         try {
-            transacao = sessao.beginTransaction(); // abrindo a transação
-            sessao.save(fornecedor);
-            transacao.commit(); // confirmando a transação
-
+            transacao = sessao.beginTransaction();
+            sessao.save(produto);
+            transacao.commit();
         } catch (RuntimeException ex) {
             if (transacao != null) {
-                transacao.rollback(); // desfaz a transação
+                transacao.rollback();
             }
             throw ex;
         } finally {
             sessao.close();
         }
-
     }
 
     @SuppressWarnings("unchecked")
-    public List<Fornecedor> listar() {
+    public List<Produto> listar() {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-
-        List<Fornecedor> fornecedores = null;
+        List<Produto> produtos = null;
 
         try {
-
-            Query consulta = sessao.getNamedQuery("Fornecedor.listar");
-            fornecedores = consulta.list();
-
+            Query consulta = sessao.getNamedQuery("Produto.listar");
+            produtos = consulta.list();
         } catch (RuntimeException ex) {
             throw ex;
         } finally {
             sessao.close();
         }
 
-        return fornecedores;
+        return produtos;
     }
 
-    public Fornecedor buscarPorCodigo(Long codigo) {
+    public Produto buscarPorCodigo(Long codigo) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-
-        Fornecedor fornecedor = null;
+        Produto produto = null;
 
         try {
-
-            Query consulta = sessao.getNamedQuery("Fornecedor.buscarPorCodigo");
+            Query consulta = sessao.getNamedQuery("Produto.buscarPorCodigo");
             consulta.setLong("codigo", codigo);
-            fornecedor = (Fornecedor) consulta.uniqueResult();
-
+            produto = (Produto) consulta.uniqueResult();
         } catch (RuntimeException ex) {
             throw ex;
         } finally {
             sessao.close();
         }
 
-        return fornecedor;
+        return produto;
     }
 
-    public void excluir(Fornecedor fornecedor) {
+    public void excluir(Produto produto) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-
         Transaction transacao = null;
 
         try {
-            transacao = sessao.beginTransaction(); // abrindo a transação
-            sessao.delete(fornecedor);
-            transacao.commit(); // confirmando a transação
-
+            transacao = sessao.beginTransaction();
+            sessao.delete(produto);
+            transacao.commit();
         } catch (RuntimeException ex) {
             if (transacao != null) {
-                transacao.rollback(); // desfaz a transação
+                transacao.rollback();
             }
-
+            throw ex;
         } finally {
             sessao.close();
         }
-
     }
 
-    public void editar(Fornecedor fornecedor) {
+    public void editar(Produto produto) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-
         Transaction transacao = null;
 
         try {
-            transacao = sessao.beginTransaction(); // abrindo a transação
-            sessao.update(fornecedor);
-            transacao.commit(); // confirmando a transação
-
+            transacao = sessao.beginTransaction();
+            sessao.update(produto);
+            transacao.commit();
         } catch (RuntimeException ex) {
             if (transacao != null) {
-                transacao.rollback(); // desfaz a transação
+                transacao.rollback();
             }
-
+            throw ex;
         } finally {
             sessao.close();
         }
-
     }
-
 }

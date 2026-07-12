@@ -1,5 +1,6 @@
-package br.com.Vendas.domain;
+package br.com.vendas.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -17,12 +18,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_itens")
 @NamedQueries({
-    @NamedQuery(name = "Item.listar", query = "SELECT i FROM Item i")
-    ,
-@NamedQuery(name = "Item.buscarPorCodigo", query = "SELECT i FROM Item i WHERE i.codigo = :codigo")
-
+    @NamedQuery(name = "Item.listar", query = "SELECT i FROM Item i"),
+    @NamedQuery(name = "Item.buscarPorCodigo", query = "SELECT i FROM Item i WHERE i.codigo = :codigo")
 })
-public class Item {
+public class Item implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -33,7 +34,7 @@ public class Item {
     private Integer quantidade;
 
     @Column(name = "ite_valor_parcial", nullable = false, scale = 2, precision = 7)
-    private BigDecimal valor_parcial;
+    private BigDecimal valorParcial;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tb_produtos_pro_codigo", referencedColumnName = "pro_codigo",
@@ -43,7 +44,7 @@ public class Item {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tb_vendas_ven_codigo", referencedColumnName = "ven_codigo",
             nullable = false)
-    private Vendas venda;
+    private Venda venda;
 
     public Long getCodigo() {
         return codigo;
@@ -61,12 +62,12 @@ public class Item {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getValor_parcial() {
-        return valor_parcial;
+    public BigDecimal getValorParcial() {
+        return valorParcial;
     }
 
-    public void setValor_parcial(BigDecimal valor_parcial) {
-        this.valor_parcial = valor_parcial;
+    public void setValorParcial(BigDecimal valorParcial) {
+        this.valorParcial = valorParcial;
     }
 
     public Produto getProduto() {
@@ -77,17 +78,17 @@ public class Item {
         this.produto = produto;
     }
 
-    public Vendas getVenda() {
+    public Venda getVenda() {
         return venda;
     }
 
-    public void setVenda(Vendas venda) {
+    public void setVenda(Venda venda) {
         this.venda = venda;
     }
 
     @Override
     public String toString() {
-        return "Item [codigo=" + codigo + ", quantidade=" + quantidade + ", valor_parcial=" + valor_parcial
+        return "Item [codigo=" + codigo + ", quantidade=" + quantidade + ", valorParcial=" + valorParcial
                 + ", produto=" + produto + ", venda=" + venda + "]";
     }
 
@@ -120,5 +121,4 @@ public class Item {
         }
         return true;
     }
-
 }

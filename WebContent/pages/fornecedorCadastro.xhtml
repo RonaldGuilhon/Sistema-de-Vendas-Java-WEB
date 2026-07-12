@@ -21,29 +21,42 @@
                     <h:outputText value="Fornecedores" />
                 </f:facet>
             </p:toolbar>
-            <h:panelGrid columns="2" id="pnforcad">
+            <h:panelGrid columns="3" id="pnforcad">
                 <p:outputLabel value="Código:" />
-                <p:inputText maxlength="20" size="10" readonly="true" value="#{MBFornecedores.fornecedores.codigo}" />
-                <p:outputLabel value="Descrição:" />
-                <p:inputText maxlength="50" size="20" value="#{MBFornecedores.fornecedores.descricao}"
-                    readonly="#{MBFornecedores.acao == 'Excluir'}">
+                <p:inputText maxlength="20" size="10" readonly="true" value="#{MBFornecedores.fornecedor.codigo}" />
+                <h:outputText />
+                <p:outputLabel value="Descrição: *" />
+                <p:inputText maxlength="50" size="20" value="#{MBFornecedores.fornecedor.descricao}"
+                    readonly="#{MBFornecedores.acao == 'Excluir'}" required="true"
+                    requiredMessage="Insira a Descrição do fornecedor">
                     <f:validateBean />
                 </p:inputText>
+                <p:message for="@this" display="text" />
             </h:panelGrid>
 
             <h:panelGrid columns="5">
                 <p:commandButton value="Novo" actionListener="#{MBFornecedores.novo}" update=":frmforcad:pnforcad"
                     rendered="#{MBFornecedores.acao == 'Novo'}" />
                 <p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}"
-                    update=":msgGlobal :frmforcad:pnforcad" />
+                    update=":msgGlobal :frmforcad:pnforcad" process="@form" icon="ui-icon-disk" />
 
                 <p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}" update=":msgGlobal"
-                    rendered="#{MBFornecedores.acao == 'Excluir'}" />
+                    rendered="#{MBFornecedores.acao == 'Excluir'}" onclick="PF('dlgConfirmExcluir').show()" />
                 <p:commandButton value="Editar" actionListener="#{MBFornecedores.editar}" update=":msgGlobal"
-                    rendered="#{MBFornecedores.acao == 'Editar'}" />
-                <p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml" />
+                    rendered="#{MBFornecedores.acao == 'Editar'}" process="@form" icon="ui-icon-disk" />
+                <p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
 
             </h:panelGrid>
+
+            <p:dialog header="Confirmar Exclusão" widgetVar="dlgConfirmExcluir" modal="true"
+                resizable="false" appendTo="@(body)">
+                <h:outputText value="Tem certeza que deseja excluir este fornecedor?" />
+                <f:facet name="footer">
+                    <p:commandButton value="Sim" actionListener="#{MBFornecedores.excluir}"
+                        update=":msgGlobal" onclick="PF('dlgConfirmExcluir').hide()" />
+                    <p:commandButton value="Não" onclick="PF('dlgConfirmExcluir').hide()" />
+                </f:facet>
+            </p:dialog>
         </h:form>
 
     </ui:define>

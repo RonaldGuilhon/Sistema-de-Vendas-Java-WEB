@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+    template="/templates/template.xhtml">
+
+    <ui:define name="conteudo">
+        <h:form id="frmEstoque">
+
+            <p:toolbar>
+                <f:facet name="left">
+                    <h:outputText value="Relatório de Estoque" />
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton value="PDF" icon="ui-icon-document"
+                        ajax="false" process="@form"
+                        actionListener="#{MBRelatorioEstoque.gerarRelatorio}">
+                        <p:dataExporter type="pdf" target="tbEstoque"
+                            fileName="relatorio_estoque" />
+                    </p:commandButton>
+                </f:facet>
+            </p:toolbar>
+
+            <p:separator />
+
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:selectBooleanCheckbox id="chkEstoqueBaixo"
+                    value="#{MBRelatorioEstoque.somenteEstoqueBaixo}" />
+                <p:outputLabel value="Apenas estoque baixo (≤ 5)" for="chkEstoqueBaixo" />
+
+                <p:commandButton value="Gerar Relatório"
+                    actionListener="#{MBRelatorioEstoque.gerarRelatorio}"
+                    update=":frmEstoque:tbEstoque :frmEstoque:pnlResumo" icon="ui-icon-search" />
+            </h:panelGrid>
+
+            <p:separator />
+
+            <p:panel id="pnlResumo" header="Resumo"
+                rendered="#{not empty MBRelatorioEstoque.produtos}">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Total de Produtos:" style="font-weight: bold;" />
+                    <h:outputText value="#{MBRelatorioEstoque.totalProdutos}" />
+                    <h:outputText value="Estoque Baixo (≤ 5):" style="font-weight: bold; color: orange;" />
+                    <h:outputText value="#{MBRelatorioEstoque.produtosEstoqueBaixo}" />
+                    <h:outputText value="Sem Estoque:" style="font-weight: bold; color: red;" />
+                    <h:outputText value="#{MBRelatorioEstoque.produtosSemEstoque}" />
+                </h:panelGrid>
+            </p:panel>
+
+            <p:separator />
+
+            <p:dataTable id="tbEstoque" var="produto" value="#{MBRelatorioEstoque.produtos}"
+                filteredValue="#{MBRelatorioEstoque.produtosFiltrados}"
+                emptyMessage="Nenhum produto encontrado."
+                rows="10" paginator="true" rowsPerPageTemplate="5,10,25,50">
+
+                <p:column headerText="Código">
+                    <h:outputText value="#{produto.codigo}" />
+                </p:column>
+
+                <p:column headerText="Descrição" filterBy="#{produto.descricao}" sortBy="#{produto.descricao}">
+                    <h:outputText value="#{produto.descricao}" />
+                </p:column>
+
+                <p:column headerText="Preço">
+                    <h:outputText value="#{produto.preco}" />
+                </p:column>
+
+                <p:column headerText="Quantidade" sortBy="#{produto.quantidade}">
+                    <h:outputText value="#{produto.quantidade}"
+                        styleClass="#{produto.quantidade le 0 ? 'ui-outputfont-red' : (produto.quantidade le 5 ? 'ui-outputfont-orange' : 'ui-outputfont-green')}" />
+                </p:column>
+
+                <p:column headerText="Status">
+                    <h:outputText value="Sem Estoque"
+                        rendered="#{produto.quantidade le 0}"
+                        style="color: red; font-weight: bold;" />
+                    <h:outputText value="Estoque Baixo"
+                        rendered="#{produto.quantidade gt 0 and produto.quantidade le 5}"
+                        style="color: orange; font-weight: bold;" />
+                    <h:outputText value="Disponível"
+                        rendered="#{produto.quantidade gt 5}"
+                        style="color: green; font-weight: bold;" />
+                </p:column>
+
+                <p:column headerText="Fornecedor" filterBy="#{produto.fornecedor.descricao}">
+                    <h:outputText value="#{produto.fornecedor.descricao}" />
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

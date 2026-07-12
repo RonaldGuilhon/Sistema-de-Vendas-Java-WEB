@@ -22,36 +22,45 @@
           <h:outputText value="Funcionarios" />
         </f:facet>
       </p:toolbar>
-      <h:panelGrid columns="2" id="pnfuncad">
+      <h:panelGrid columns="3" id="pnfuncad">
         <p:outputLabel value="Código:" />
         <p:inputText maxlength="20" size="10" readonly="true" value="#{MBFuncionarios.funcionario.codigo}" />
+        <h:outputText />
 
-        <p:outputLabel value="Nome:" />
+        <p:outputLabel value="Nome: *" />
         <p:inputText maxlength="50" size="20" value="#{MBFuncionarios.funcionario.nome}"
-          readonly="#{MBFuncionarios.acao == 'Excluir'}">
+          readonly="#{MBFuncionarios.acao == 'Excluir'}" required="true"
+          requiredMessage="Insira o Nome do funcionário">
           <f:validateBean />
         </p:inputText>
+        <p:message for="@this" display="text" />
 
-        <p:outputLabel value="CPF:" />
+        <p:outputLabel value="CPF: *" />
         <p:inputMask mask="999.999.999-99" maxlength="50" size="20" value="#{MBFuncionarios.funcionario.cpf}"
-          readonly="#{MBFuncionarios.acao == 'Excluir'}">
+          readonly="#{MBFuncionarios.acao == 'Excluir'}" required="true"
+          requiredMessage="Insira o CPF do funcionário">
           <f:validateBean />
         </p:inputMask>
+        <p:message for="@this" display="text" />
 
 
-        <p:outputLabel value="Senha:" />
+        <p:outputLabel value="Senha: *" />
         <p:password maxlength="8" size="20" value="#{MBFuncionarios.funcionario.senha}"
-          readonly="#{MBFuncionarios.acao == 'Excluir'}">
+          readonly="#{MBFuncionarios.acao == 'Excluir'}" required="true"
+          requiredMessage="Insira a Senha do funcionário">
           <f:validateBean />
         </p:password>
+        <p:message for="@this" display="text" />
 
-        <p:outputLabel value="Cargo:" />
-        <p:selectOneMenu value="#{MBFuncionarios.funcionario.funcao}" disabled="#{MBFuncionarios.acao == 'Excluir'}">
+        <p:outputLabel value="Cargo: *" />
+        <p:selectOneMenu value="#{MBFuncionarios.funcionario.funcao}" disabled="#{MBFuncionarios.acao == 'Excluir'}"
+          required="true" requiredMessage="Selecione o Cargo">
           <f:selectItem itemValue="" itemLabel="Selecione um Cargo" />
           <f:selectItem itemValue="Administrador" itemLabel="Administrador" />
           <f:selectItem itemValue="Gerente" itemLabel="Gerente" />
           <f:selectItem itemValue="Balconista" itemLabel="Balconista" />
         </p:selectOneMenu>
+        <p:message for="@this" display="text" />
 
 
       </h:panelGrid>
@@ -60,15 +69,25 @@
         <p:commandButton value="Novo" actionListener="#{MBFuncionarios.novo}" update=":frmfuncad:pnfuncad"
           rendered="#{MBFuncionarios.acao == 'Novo'}" />
         <p:commandButton value="Salvar" actionListener="#{MBFuncionarios.salvar}"
-          update=":msgGlobal :frmfuncad:pnfuncad" />
+          update=":msgGlobal :frmfuncad:pnfuncad" process="@form" icon="ui-icon-disk" />
 
         <p:commandButton value="Excluir" actionListener="#{MBFuncionarios.excluir}" update=":msgGlobal"
-          rendered="#{MBFuncionarios.acao == 'Excluir'}" />
+          rendered="#{MBFuncionarios.acao == 'Excluir'}" onclick="PF('dlgConfirmExcluir').show()" />
         <p:commandButton value="Editar" actionListener="#{MBFuncionarios.editar}" update=":msgGlobal"
-          rendered="#{MBFuncionarios.acao == 'Editar'}" />
-        <p:button value="Voltar" outcome="/pages/funcionarioPesquisa.xhtml" />
+          rendered="#{MBFuncionarios.acao == 'Editar'}" process="@form" icon="ui-icon-disk" />
+        <p:button value="Voltar" outcome="/pages/funcionarioPesquisa.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
 
       </h:panelGrid>
+
+      <p:dialog header="Confirmar Exclusão" widgetVar="dlgConfirmExcluir" modal="true"
+        resizable="false" appendTo="@(body)">
+        <h:outputText value="Tem certeza que deseja excluir este funcionário?" />
+        <f:facet name="footer">
+          <p:commandButton value="Sim" actionListener="#{MBFuncionarios.excluir}"
+            update=":msgGlobal" onclick="PF('dlgConfirmExcluir').hide()" />
+          <p:commandButton value="Não" onclick="PF('dlgConfirmExcluir').hide()" />
+        </f:facet>
+      </p:dialog>
     </h:form>
 
   </ui:define>

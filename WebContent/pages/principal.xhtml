@@ -7,9 +7,20 @@
 
 
     <ui:define name="conteudo">
-        <h:outputLabel>
-            Página Principal
-        </h:outputLabel>
+        <h:panelGroup style="display: block; text-align: center; padding: 50px;">
+            <h2>Bem-vindo ao Sistema de Vendas</h2>
+            <p style="color: #666; margin-top: 10px;">
+                Utilize o menu ao lado para navegar entre as funcionalidades do sistema.
+            </p>
+
+            <h:panelGroup rendered="#{MBLogin.logado}" style="display: block; margin-top: 30px;">
+                <p style="font-size: 14px;">
+                    Olá, <strong>#{MBLogin.nomeFuncionario}</strong>!
+                    <br/>
+                    Você está logado como <em>#{MBLogin.funcaoFuncionario}</em>.
+                </p>
+            </h:panelGroup>
+        </h:panelGroup>
     </ui:define>
 
 </ui:composition>

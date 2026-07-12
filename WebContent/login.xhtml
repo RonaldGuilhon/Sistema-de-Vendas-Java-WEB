@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="style.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Login - Sistema de Vendas</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            width: 400px;
+            margin: 120px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-header h2 {
+            color: #333;
+            margin: 0;
+        }
+        .login-header p {
+            color: #666;
+            margin-top: 5px;
+        }
+        .login-form {
+            width: 100%;
+        }
+        .login-form .field {
+            margin-bottom: 20px;
+        }
+        .login-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .login-form input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-btn:hover {
+            background-color: #45a049;
+        }
+        .error-panel {
+            margin-bottom: 20px;
+        }
+        .required-note {
+            color: #999;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Sistema de Vendas</h2>
+            <p>Realize o login para acessar o sistema</p>
+        </div>
+
+        <h:form id="loginForm" styleClass="login-form">
+            <p:growl id="growl" showDetail="false" life="3000" />
+
+            <div class="error-panel">
+                <p:messages id="messages" showDetail="false" globalOnly="true" styleClass="error" />
+            </div>
+
+            <div class="field">
+                <p:outputLabel for="cpf" value="CPF:" />
+                <p:inputMask id="cpf" mask="999.999.999-99"
+                    value="#{MBLogin.cpf}" size="30"
+                    style="width: 100%;" required="true"
+                    requiredMessage="Informe o CPF" />
+                <p:message for="cpf" display="text" style="color: red; font-size: 12px;" />
+            </div>
+
+            <div class="field">
+                <p:outputLabel for="senha" value="Senha:" />
+                <p:password id="senha" value="#{MBLogin.senha}" size="30"
+                    style="width: 100%;" feedback="false" required="true"
+                    requiredMessage="Informe a Senha" />
+                <p:message for="senha" display="text" style="color: red; font-size: 12px;" />
+            </div>
+
+            <p:commandButton value="Entrar" action="#{MBLogin.autenticar}"
+                update="growl messages"
+                styleClass="login-btn"
+                icon="ui-icon-key" />
+
+            <div class="required-note">
+                * Campos obrigatórios
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; color: #999; font-size: 12px;">
+                <p>Sistema de Vendas - Desenvolvido por Ronald</p>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

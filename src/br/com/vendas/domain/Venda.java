@@ -1,4 +1,4 @@
-package br.com.Vendas.domain;
+package br.com.vendas.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,12 +21,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tb_vendas")
 @NamedQueries({
-    @NamedQuery(name = "Venda.listar", query = "SELECT v FROM Vendas v")
-    ,
-@NamedQuery(name = "Venda.buscarPorCodigo", query = "SELECT v FROM Vendas v WHERE v.codigo = :codigo")
-
+    @NamedQuery(name = "Venda.listar", query = "SELECT v FROM Venda v"),
+    @NamedQuery(name = "Venda.buscarPorCodigo", query = "SELECT v FROM Venda v WHERE v.codigo = :codigo")
 })
-public class Vendas implements Serializable {
+public class Venda implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -38,7 +38,7 @@ public class Vendas implements Serializable {
     private Date horario;
 
     @Column(name = "ven_valor_total", nullable = false, scale = 2, precision = 7)
-    private BigDecimal valor_total;
+    private BigDecimal valorTotal;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tb_funcionarios_fun_codigo", referencedColumnName = "fun_codigo",
@@ -61,12 +61,12 @@ public class Vendas implements Serializable {
         this.horario = horario;
     }
 
-    public BigDecimal getValor_total() {
-        return valor_total;
+    public BigDecimal getValorTotal() {
+        return valorTotal;
     }
 
-    public void setValor_total(BigDecimal valor_total) {
-        this.valor_total = valor_total;
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public Funcionario getFuncionario() {
@@ -79,8 +79,8 @@ public class Vendas implements Serializable {
 
     @Override
     public String toString() {
-        return "Vendas [codigo=" + codigo + ", horario=" + horario + ", valor_total=" + valor_total + ", funcionario="
-                + funcionario + "]";
+        return "Venda [codigo=" + codigo + ", horario=" + horario + ", valorTotal=" + valorTotal
+                + ", funcionario=" + funcionario + "]";
     }
 
     @Override
@@ -102,7 +102,7 @@ public class Vendas implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Vendas other = (Vendas) obj;
+        Venda other = (Venda) obj;
         if (codigo == null) {
             if (other.codigo != null) {
                 return false;
@@ -112,5 +112,4 @@ public class Vendas implements Serializable {
         }
         return true;
     }
-
 }

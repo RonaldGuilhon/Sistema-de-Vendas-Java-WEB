@@ -1,14 +1,12 @@
-package br.com.Vendas.test;
+package br.com.vendas.test;
 
 import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import br.com.Vendas.DAO.FornecedoresDAO;
-import br.com.Vendas.DAO.FuncionariosDAO;
-import br.com.Vendas.domain.Fornecedor;
-import br.com.Vendas.domain.Funcionario;
+import br.com.vendas.dao.FuncionarioDAO;
+import br.com.vendas.domain.Funcionario;
 
 public class FuncionarioDAOTest {
 
@@ -16,22 +14,19 @@ public class FuncionarioDAOTest {
     @Ignore
     public void salvar() {
         Funcionario f1 = new Funcionario();
-
         f1.setNome("Pedro Freitas");
         f1.setCpf("07014588936");
         f1.setSenha("123");
         f1.setFuncao("funcionário");
 
-        FuncionariosDAO dao = new FuncionariosDAO();
-
+        FuncionarioDAO dao = new FuncionarioDAO();
         dao.salvar(f1);
-
     }
 
     @Test
     @Ignore
     public void listar() {
-        FuncionariosDAO dao = new FuncionariosDAO();
+        FuncionarioDAO dao = new FuncionarioDAO();
         List<Funcionario> funcionarios = dao.listar();
 
         for (Funcionario funcionario : funcionarios) {
@@ -42,9 +37,9 @@ public class FuncionarioDAOTest {
     @Test
     @Ignore
     public void buscarPorCodigo() {
-        FornecedoresDAO dao = new FornecedoresDAO();
-        Fornecedor f1 = dao.buscarPorCodigo(6L);
-        Fornecedor f2 = dao.buscarPorCodigo(4L);
+        FuncionarioDAO dao = new FuncionarioDAO();
+        Funcionario f1 = dao.buscarPorCodigo(6L);
+        Funcionario f2 = dao.buscarPorCodigo(4L);
 
         System.out.println(f1);
         System.out.println(f2);
@@ -53,28 +48,20 @@ public class FuncionarioDAOTest {
     @Test
     @Ignore
     public void excluir() {
-        FuncionariosDAO dao = new FuncionariosDAO();
-
+        FuncionarioDAO dao = new FuncionarioDAO();
         Funcionario funcionario = dao.buscarPorCodigo(5L);
-
         dao.excluir(funcionario);
-
     }
 
     @Test
     @Ignore
     public void editar() {
-
-        FuncionariosDAO dao = new FuncionariosDAO();
-
+        FuncionarioDAO dao = new FuncionarioDAO();
         Funcionario funcionario = dao.buscarPorCodigo(4L);
         funcionario.setNome("Paula Campos");
         funcionario.setSenha("456");
         funcionario.setCpf("0646454");
         funcionario.setFuncao("Gerente");
-
         dao.editar(funcionario);
-
     }
-
 }

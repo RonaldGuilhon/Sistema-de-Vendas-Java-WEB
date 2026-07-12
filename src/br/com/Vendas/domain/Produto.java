@@ -1,4 +1,4 @@
-package br.com.Vendas.domain;
+package br.com.vendas.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -23,12 +24,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "tb_produtos")
 @NamedQueries({
-    @NamedQuery(name = "Produto.listar", query = "SELECT p FROM Produto p")
-    ,
+    @NamedQuery(name = "Produto.listar", query = "SELECT p FROM Produto p"),
     @NamedQuery(name = "Produto.buscarPorCodigo", query = "SELECT p FROM Produto p WHERE p.codigo = :codigo")
-
 })
 public class Produto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -48,6 +49,10 @@ public class Produto implements Serializable {
     @Min(value = 0, message = "O valor não pode ser menor que 0")
     @Column(name = "pro_quantidade", nullable = false)
     private Integer quantidade;
+
+    @Version
+    @Column(name = "pro_versao")
+    private Long versao;
 
     @NotNull(message = "Insira um Fornecedor")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -85,6 +90,14 @@ public class Produto implements Serializable {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Long getVersao() {
+        return versao;
+    }
+
+    public void setVersao(Long versao) {
+        this.versao = versao;
     }
 
     public Fornecedor getFornecedor() {
@@ -127,8 +140,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return "Produto [codigo=" + codigo + ", descricao=" + descricao + ", preco=" + preco + ", quantidade=" + quantidade
-                + ", fornecedor=" + fornecedor + "]";
+        return "Produto [codigo=" + codigo + ", descricao=" + descricao + ", preco=" + preco
+                + ", quantidade=" + quantidade + ", versao=" + versao + ", fornecedor=" + fornecedor + "]";
     }
-
 }

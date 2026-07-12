@@ -1,8 +1,8 @@
-package br.com.Vendas.test;
+package br.com.vendas.test;
 
 import org.junit.Test;
 
-import br.com.Vendas.util.HibernateUtil;
+import br.com.vendas.util.HibernateUtil;
 
 public class GerarTabelasTest {
 
@@ -11,5 +11,4 @@ public class GerarTabelasTest {
     public void gerar() {
         HibernateUtil.getSessionFactory();
     }
-
 }

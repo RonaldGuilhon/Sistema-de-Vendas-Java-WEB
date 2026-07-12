@@ -25,8 +25,8 @@
             <h:panelGrid columns="4">
                 <p:outputLabel value="Descrição:" />
                 <p:inputText maxlength="50" size="30" />
-                <p:button value="Buscar" />
-                <p:button value="Novo" outcome="/pages/produtoCadastro.xhtml">
+                <p:button value="Buscar" icon="ui-icon-search" />
+                <p:button value="Novo" outcome="/pages/produtoCadastro.xhtml" icon="ui-icon-plus">
                     <f:param name="proacao" value="Novo" />
                 </p:button>
             </h:panelGrid>
@@ -42,8 +42,21 @@
                 <p:column headerText="Preço">
                     <h:outputText value="#{produto.preco}" />
                 </p:column>
-                <p:column headerText="Quantidade">
-                    <h:outputText value="#{produto.quantidade}" />
+                <p:column headerText="Quantidade" sortBy="#{produto.quantidade}">
+                    <h:outputText value="#{produto.quantidade}"
+                        style="font-weight: bold;"
+                        styleClass="#{produto.quantidade le 0 ? 'ui-outputfont-red' : (produto.quantidade le 5 ? 'ui-outputfont-orange' : 'ui-outputfont-green')}" />
+                </p:column>
+                <p:column headerText="Status Estoque">
+                    <h:outputText value="Sem Estoque"
+                        rendered="#{produto.quantidade le 0}"
+                        style="color: red; font-weight: bold;" />
+                    <h:outputText value="Estoque Baixo"
+                        rendered="#{produto.quantidade gt 0 and produto.quantidade le 5}"
+                        style="color: orange; font-weight: bold;" />
+                    <h:outputText value="Disponível"
+                        rendered="#{produto.quantidade gt 5}"
+                        style="color: green; font-weight: bold;" />
                 </p:column>
                 <p:column headerText="Fornecedor" filterBy="#{produto.fornecedor.descricao}">
                     <h:outputText value="#{produto.fornecedor.descricao}" />
