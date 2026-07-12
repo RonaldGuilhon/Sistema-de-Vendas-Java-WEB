@@ -39,8 +39,7 @@ public class Funcionario implements Serializable {
     private String cpf;
 
     @NotEmpty(message = "Insira a Senha")
-    @Size(min = 5, max = 8, message = "Sua senha deve conter de 5 a 8 caracteres")
-    @Column(name = "fun_senha", length = 50, nullable = false)
+    @Column(name = "fun_senha", length = 64, nullable = false)
     private String senha;
 
     @NotEmpty(message = "Insira um cargo")

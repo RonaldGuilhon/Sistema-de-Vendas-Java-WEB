@@ -38,20 +38,24 @@ public class ContextListener implements ServletContextListener {
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
         List<Funcionario> funcionarios = funcionarioDAO.listar();
 
+        boolean adminExiste = false;
         for (Funcionario func : funcionarios) {
             if ("Administrador".equals(func.getFuncao())) {
+                adminExiste = true;
                 logger.info("Administrador já existe: {} (CPF: {})", func.getNome(), func.getCpf());
-                return;
+                break;
             }
         }
 
-        Funcionario admin = new Funcionario();
-        admin.setNome("Administrador");
-        admin.setCpf("000.000.000-00");
-        admin.setSenha(PasswordUtil.criptografar("admin123"));
-        admin.setFuncao("Administrador");
+        if (!adminExiste) {
+            Funcionario admin = new Funcionario();
+            admin.setNome("Administrador");
+            admin.setCpf("000.000.000-00");
+            admin.setSenha(PasswordUtil.criptografar("admin123"));
+            admin.setFuncao("Administrador");
 
-        funcionarioDAO.salvar(admin);
-        logger.info("Administrador padrão criado! CPF: 000.000.000-00 | Senha: admin123");
+            funcionarioDAO.salvar(admin);
+            logger.info("Administrador padrão criado! CPF: 000.000.000-00 | Senha: admin123");
+        }
     }
 }
