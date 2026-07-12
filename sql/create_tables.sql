@@ -1,15 +1,13 @@
 -- ============================================
 -- Sistema de Vendas - Script de Criação do Banco
--- Banco: PostgreSQL
+-- Banco: PostgreSQL (portátil - funciona em qualquer SO)
 -- ============================================
 
 -- Criar banco de dados
--- DROP DATABASE IF EXISTS vendas;
+DROP DATABASE IF EXISTS vendas;
 CREATE DATABASE vendas
     WITH OWNER = postgres
     ENCODING = 'UTF8'
-    LC_COLLATE = 'Portuguese_Brazil.1252'
-    LC_CTYPE = 'Portuguese_Brazil.1252'
     TEMPLATE = template0;
 
 \c vendas
