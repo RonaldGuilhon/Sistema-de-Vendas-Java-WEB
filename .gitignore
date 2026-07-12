@@ -1,6 +1,7 @@
 # Build output
 /build/
 /target/
+WebContent/WEB-INF/classes/
 
 # IDE files
 .classpath
